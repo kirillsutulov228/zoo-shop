@@ -1,0 +1,24 @@
+<header class="h-[var(--header-h)] bg-white border-b-[1px] border-grey-300 flex items-center px-8 relative">
+  <div class="min-w-fit flex items-center m-2">
+    <img class="w-24 h-24 inline-block object-contain" src="/public/img/logo.png" alt="">
+    <span class="hidden sm:inline-block whitespace-nowrap lg:text-2xl">Зоомагазин - "Верный друг"</span>
+  </div>
+  <nav id="header-nav" class="ml-auto min-w-full border-b-[1px] lg:border-b-0 border-gray-300 bg-white lg:min-w-fit hidden lg:static lg:block absolute top-full left-0">
+    <a class="block lg:inline-block text-center bg-blue-600 px-5 py-2 rounded text-white my-4 mx-1" href="/">Главная</a>
+    <a class="block lg:inline-block text-center px-5 py-2 text-blue-600 my-4 mx-1" href="/catalog">Каталог</a>
+    <% if (locals.user) { %>
+    <% } else { %>
+      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1 " href="/login">Войти</a>
+      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1 " href="/register">Зарегистрироватсья</a>
+    <% } %>
+  </nav>
+  <div id="menu-button" class="cursor-pointer min-w-fit lg:hidden ml-auto inline-block bg-blue-600 px-5 py-2 rounded text-white m-1">Меню</div>
+</header>
+
+<script>
+  const headerNav = document.getElementById('header-nav');
+  const menuButton = document.getElementById('menu-button');
+  menuButton.addEventListener('click', () => {
+    headerNav.classList.toggle('hidden');
+  });
+</script>

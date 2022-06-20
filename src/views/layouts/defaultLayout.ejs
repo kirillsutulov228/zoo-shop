@@ -1,0 +1,19 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/style.css" />
+    <%- style -%>
+    <link rel="icon" href="/public/favicon.svg" sizes="any" type="image/svg+xml">
+    <title><%= locals.title || 'Document' -%></title>
+  </head>
+  <body class="min-h-screen bg-slate-50 min-w-[280px]">
+    <%- include('../partials/header') -%>
+    <div class="min-h-[calc(100vh-var(--header-h))]">
+      <%- body -%>
+    </div>
+    <%- include('../partials/footer') -%>
+    <%- script -%>
+  </body>
+</html>
