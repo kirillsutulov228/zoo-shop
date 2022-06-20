@@ -3,17 +3,24 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/public/style.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
     <%- style -%>
-    <link rel="icon" href="/public/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="icon" href="/public/favicon.svg" sizes="any" type="image/svg+xml" />
     <title><%= locals.title || 'Document' -%></title>
   </head>
-  <body class="min-h-screen bg-slate-50 min-w-[280px]">
-    <%- include('../partials/header') -%>
-    <div class="min-h-[calc(100vh-var(--header-h))]">
-      <%- body -%>
+  <body class="min-h-screen min-w-[500px]">
+    <div class="relative overflow-hidden">
+      <%- include('../partials/header') -%>
+      <div class="min-h-[calc(100vh-var(--header-h))]"><%- body -%></div>
+      <%- include('../partials/footer') -%>
     </div>
-    <%- include('../partials/footer') -%>
+    <script>
+      const headerNav = document.getElementById('header-nav');
+      const menuButton = document.getElementById('menu-button');
+      menuButton.addEventListener('click', () => {
+        headerNav.classList.toggle('hidden');
+      });
+    </script>
     <%- script -%>
   </body>
 </html>

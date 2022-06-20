@@ -1,3 +1,59 @@
-<div>
+<link rel="stylesheet" href="/public/css/splide.min.css" />
 
+<div class="container mx-auto">
+  <div class="h-[420px] mx-auto bg-white">
+    <section class="splide h-full">
+      <div class="splide__track">
+        <ul class="splide__list">
+          <li class="splide__slide p-2">
+            <img src="/public/img/banner1.png" class="w-full max-w-5xl mx-auto h-full object-contain" />
+          </li>
+          <li class="splide__slide p-2">
+            <img src="/public/img/banner2.png" class="w-full max-w-5xl mx-auto h-full object-contain" />
+          </li>
+          <li class="splide__slide p-2">
+            <img src="/public/img/logo.png" class="w-full max-w-5xl mx-auto h-full object-contain" />
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <div class="my-8">
+    <h1 class="text-center text-2xl">Популярные бренды</h1>
+    <div class="flex justify-around flex-wrap">
+      <div class="basis-full md:basis-[50%] min-w-[300px] p-8 min-h-[240px] box-border">
+        <img src="/public/img/purina.png" alt="" class="w-36 h-36 object-contain block mx-auto" />
+        <h2 class="text-xl font-semibold">Purina</h2>
+        <p>
+          В линейке кормов Purina® представлены натуральные продукты для домашних питомцев разных возрастов и размеров,
+          а также для животных с особенностями здоровья.
+        </p>
+      </div>
+      <div class="basis-full md:basis-[50%] min-w-[300px] p-8 min-h-[240px] box-border">
+        <img src="/public/img/pedigree.png" alt="" class="w-36 h-36 object-contain block mx-auto" />
+        <h2 class="text-xl font-semibold">Pedigree</h2>
+        <p>
+          Торговая марка кормов для собак, выпускаемых американской компанией Mars
+        </p>
+      </div>
+      <div class="basis-full md:basis-[50%] min-w-[300px] p-8 min-h-[240px] box-border">
+        <img src="/public/img/orijen.png" alt="" class="w-36 h-36 object-contain block mx-auto" />
+        <h2 class="text-xl font-semibold">Purina</h2>
+        <p>
+          Канадский корм высоко оценивается и ветеринарами, а заводчиками, и любителями кошек, и самими животными.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script src="/public/scritps/splide.min.js"></script>
+<script>
+  const slider = new Splide('.splide', {
+    type: 'loop',
+    autoplay: true,
+    interval: 4000,
+    speed: '2500'
+  });
+  slider.mount();
+</script>

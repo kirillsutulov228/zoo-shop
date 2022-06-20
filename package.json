@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "npm run build && node src/index.js",
-    "build": "npx tailwind -i ./src/index.css -o ./public/style.css",
-    "build:watch": "npx tailwind -i ./src/index.css -o ./public/style.css -w",
+    "build": "npx tailwind -i ./src/index.css -o ./public/css/style.css",
+    "build:watch": "npx tailwind -i ./src/index.css -o ./public/css/style.css -w",
     "start:watch": "concurrently -n tailwind,nodemon \"npm run build:watch\" \"nodemon -e js --watch src src/index.js\""
   },
   "dependencies": {
