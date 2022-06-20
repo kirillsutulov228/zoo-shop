@@ -1,0 +1,8 @@
+<%- include('../partials/form', {
+  title: 'Вход',
+  action: "/login",
+  inputs: [
+    { type: 'text', name: 'email', label: 'E-mail *' },
+    { type: 'password', name: 'password', label: 'Пароль *' },
+  ]
+}) %>

@@ -1,0 +1,11 @@
+<%- include('../partials/form', {
+  title: 'Регистрация',
+  action: "/register",
+  inputs: [
+    { type: 'text', name: 'firstName', label: 'Имя *' },
+    { type: 'text', name: 'lastName', label: 'Фамилия *' },
+    { type: 'text', name: 'email', label: 'E-mail *' },
+    { type: 'password', name: 'password', label: 'Пароль *' },
+    { type: 'password', name: 'passwordConfirmation', label: 'Подтверждение пароля *' }
+  ]
+}) %>

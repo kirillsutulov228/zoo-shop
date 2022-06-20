@@ -7,9 +7,11 @@
     <a class="block lg:inline-block text-center bg-blue-600 px-5 py-2 rounded text-white my-4 mx-1" href="/">Главная</a>
     <a class="block lg:inline-block text-center bg-green-600 lg:bg-white px-5 py-2 text-white lg:text-blue-600 rounded my-4 mx-1" href="/catalog">Каталог</a>
     <% if (locals.user) { %>
+      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1" href="/profile">Профиль</a>
+      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1" href="/logout">Выйти</a>
     <% } else { %>
-      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1 " href="/login">Войти</a>
-      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1 " href="/register">Зарегистрироватсья</a>
+      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1" href="/login">Войти</a>
+      <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1" href="/register">Зарегистрироватсья</a>
     <% } %>
   </nav>
   <div id="menu-button" class="cursor-pointer min-w-fit lg:hidden ml-auto inline-block bg-blue-600 px-5 py-2 rounded text-white m-1">Меню</div>

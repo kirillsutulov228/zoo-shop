@@ -645,8 +645,8 @@ video {
   margin-right: 0.25rem;
 }
 
-.mb-8 {
-  margin-bottom: 2rem;
+.mb-20 {
+  margin-bottom: 5rem;
 }
 
 .mt-4 {
@@ -657,12 +657,16 @@ video {
   margin-bottom: 0.5rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
 .ml-auto {
   margin-left: auto;
 }
 
-.mb-20 {
-  margin-bottom: 5rem;
+.mt-8 {
+  margin-top: 2rem;
 }
 
 .box-border {
@@ -791,6 +795,10 @@ video {
   justify-content: space-around;
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .overflow-hidden {
   overflow: hidden;
 }
@@ -803,12 +811,21 @@ video {
   border-radius: 0.25rem;
 }
 
+.border {
+  border-width: 1px;
+}
+
 .border-t-\[1px\] {
   border-top-width: 1px;
 }
 
 .border-b-\[1px\] {
   border-bottom-width: 1px;
+}
+
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
 }
 
 .border-gray-300 {
@@ -864,14 +881,24 @@ video {
   padding-bottom: 0.5rem;
 }
 
-.px-8 {
-  padding-left: 2rem;
-  padding-right: 2rem;
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .px-5 {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .text-center {
@@ -902,9 +929,23 @@ video {
   font-weight: 600;
 }
 
+.leading-tight {
+  line-height: 1.25;
+}
+
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -912,8 +953,29 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
 :root {
   --header-h: 128px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.focus\:border-blue-400:focus {
+  --tw-border-opacity: 1;
+  border-color: rgb(96 165 250 / var(--tw-border-opacity));
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 @media (min-width: 768px) {
