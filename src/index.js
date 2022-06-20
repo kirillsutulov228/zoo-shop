@@ -3,15 +3,18 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-const { sequelize, User } = require('./models');
 const loginValidator = require('./validators/loginValidator.js');
 const yupErrorToObject = require('./utils/yupErrorToObject.js');
 const registerValidator = require('./validators/registerValidator.js');
 const sequelizeErrorToObject = require('./utils/sequelizeErrorToObject.js');
-const app = express();
+const adminRouter = require('./routers/adminRouter.js');
+const checkRole = require('./middlewares/checkRole.js');
+const { sequelize, User } = require('./models');
 
 const PORT = +process.env.PORT ?? 8000;
 const HOST = process.env.HOST ?? 'localhost';
+
+const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
@@ -29,11 +32,14 @@ app.use(
 );
 
 app.use((req, res, next) => {
+  console.log(req.session.user);
   if (req.session.user) {
     res.locals.user = req.session.user;
   }
   next();
 });
+
+app.use('/admin', checkRole(['admin']), adminRouter);
 
 app.get('/', (req, res) => {
   res.render('pages/index', { title: 'Верный Друг' });
@@ -75,7 +81,6 @@ app.post('/register', async (req, res) => {
     await registerValidator.validate(req.body, { abortEarly: false });
   } catch (error) {
     const errors = yupErrorToObject(error);
-    console.log(errors);
     return res.render('pages/register', { errors });
   }
   try {
@@ -84,7 +89,6 @@ app.post('/register', async (req, res) => {
     return res.redirect('/');
   } catch (error) {
     const errors = sequelizeErrorToObject(error);
-    console.log(errors);
     return res.render('pages/register', { errors })
   }
 });
@@ -92,9 +96,13 @@ app.post('/register', async (req, res) => {
 app.get('/logout', (req, res) => {
   req.session.destroy();
   return res.redirect('/');
-})
+});
 
-sequelize.sync().then(() => {
+app.use((req, res) => {
+  res.render('pages/notFound.ejs', { title: "Страница не найдена" });
+});
+
+sequelize.sync().then(async () => {
   app.listen(PORT, HOST);
   console.log(`Server listening on http://${HOST}:${PORT}`);
 });
