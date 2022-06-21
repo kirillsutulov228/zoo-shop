@@ -1,4 +1,4 @@
-<form class="w-full p-2 overflow-auto" action="<%= locals.action ?? '/' %>" method="<%= locals.method ?? "POST" %>">
+<form enctype="<%= locals.enctype ?? 'application/x-www-form-urlencoded' %>" class="w-full p-2 overflow-auto" action="<%= locals.action ?? '/' %>" method="<%= locals.method ?? "POST" %>">
   <% if (locals.title) { %> 
     <h1 class="text-center m-2 text-xl font-semibold"><%= title %></h1>
   <% } %>
@@ -10,10 +10,19 @@
       <% } %> 
       <% if (['text', 'email', 'password', 'number', 'url', 'tel'].includes(input.type)) { %>
         <input
-            class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border rounded outline-none w-full py-2 px-3 mb-1 text-gray-700 leading-tight focus:outline-none "
+            class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border rounded outline-none w-full py-2 px-3 mb-1 text-gray-700 leading-tight focus:outline-none"
             type="<%= input.type %>"
             value="<%= (locals.values && locals.values[input.name]) ?? '' %>"
             name="<%= input.name ?? '' %>"
+            placeholder="<%= input.placeholder ?? '' %>"
+        />
+      <% } %>
+      <% if (input.type === 'file') { %>
+        <input
+            class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border bg-white rounded outline-none w-full py-0 px-3 mb-1 text-gray-700 leading-tight focus:outline-none"
+            type="file"
+            name="<%= input.name ?? '' %>"
+            <%- input.accept ? `accept="${input.accept}"` : '' %>
             placeholder="<%= input.placeholder ?? '' %>"
         />
       <% } %>
@@ -23,5 +32,10 @@
     </div>
     <% } %>
   <% } %>
-  <input class="block text-center bg-blue-600 px-5 py-2 rounded text-white mt-8" type="submit" value="<%= locals.submitTitle ?? 'Отправить' %> " />
+  <input class="block text-center bg-blue-600 px-5 py-2 rounded text-white my-8" type="submit" value="<%= locals.submitTitle ?? 'Отправить' %> " />
+  <% if (locals.message && !locals.errors) { %>
+    <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+      <%= locals.message %>
+    </div>
+  <% } %>
 </form>

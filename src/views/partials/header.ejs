@@ -5,10 +5,10 @@
   </div>
   <nav id="header-nav" class="h-[99999999px] lg:h-auto ml-auto min-w-full z-10 border-b-[1px] lg:border-b-0 border-gray-300 bg-white lg:min-w-fit hidden lg:static lg:block absolute top-full left-0">
     <a class="block lg:inline-block text-center bg-blue-600 px-5 py-2 rounded text-white my-4 mx-1" href="/">Главная</a>
-    <a class="block lg:inline-block text-center   px-5 py-2 border text-blue-600 rounded my-4 mx-1" href="/catalog">Каталог</a>
+    <a class="block lg:inline-block text-center   px-5 py-2 border text-blue-600 rounded my-4 mx-1" href="/categories">Каталог</a>
     <% if (locals.user) { %>
       <% if (user.role === 'admin') { %>
-        <a class="block lg:inline-block text-center text-white bg-green-500 px-5 py-2 rounded my-4 mx-1" href="/admin">CMS</a>
+        <a class="block lg:inline-block text-center text-white bg-green-500 px-5 py-2 rounded my-4 mx-1" href="/admin">Админ-панель</a>
       <% } %>
       <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1" href="/profile">Профиль</a>
       <a class="block lg:inline-block text-center bg-yellow-400 px-5 py-2 rounded my-4 mx-1" href="/logout">Выйти</a>

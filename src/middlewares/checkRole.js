@@ -1,7 +1,7 @@
-function checkRole(roles = []) {
+function checkRole(roles = 'any') {
   return (req, res, next) => {
-    if (!req.session.user || !roles.includes(req.session.user.role)) {
-      return res.render('pages/unauthorized');
+    if (!req.session.user || roles !== 'any' && !roles.includes(req.session.user.role)) {
+      return res.render('pages/unauthorized', { title: "Ошибка" });
     }
     next();
   }

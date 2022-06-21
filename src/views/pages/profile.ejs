@@ -1,0 +1,26 @@
+<div class="container mx-auto">
+  <div class="border my-8 p-8 bg-white rounded-md">
+    <img class="block mx-auto w-48 h48 rounded-[50%]" src="/public/img/avatar.png" />
+    <div class="w-fit overflow-auto mx-auto my-4">
+      <p class="text-xl m-2 font-semibold text-center"><%= profile.firstName + " " + profile.lastName %></p>
+      <p class="text-lg m-2 text-center"><%= profile.role === "admin" ? "Администратор" : "Пользователь" %></p>
+    </div>
+  </div>
+  
+  <% if (profile.id == user.id) { %>
+    <div class="rounded border bg-white p-2">
+    <%- include('../partials/form', {
+          title: 'Редактировать данные',
+          action: "/change_user/" + profile.id,
+          values: { ...values },
+          inputs: [
+            { type: 'text', name: 'firstName', label: 'Имя *' },
+            { type: 'text', name: 'lastName', label: 'Фамилия *' },
+            { type: 'text', name: 'email', label: 'E-mail *' },
+            { type: 'password', name: 'password', label: 'Пароль *' },
+            { type: 'password', name: 'passwordConfirmation', label: 'Подтверждение пароля *' }
+          ]
+        }) %>
+    </div>   
+  <% } %> 
+</div>
