@@ -4,35 +4,51 @@
   <% } %>
   <% if (locals.inputs) { %>
     <% for (const input of inputs) { %>
-      <div class="my-4">
-      <% if (input.label) { %>
-        <label class="block w-full py-1 text-gray-800 text-sm mb-1"><%= input.label %></label>
-      <% } %> 
-      <% if (['text', 'email', 'password', 'number', 'url', 'tel'].includes(input.type)) { %>
+      <% if (input.type === 'hidden') { %>
         <input
-            class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border rounded outline-none w-full py-2 px-3 mb-1 text-gray-700 leading-tight focus:outline-none"
-            type="<%= input.type %>"
-            value="<%= (locals.values && locals.values[input.name]) ?? '' %>"
+            class="hidden"
+            type="hidden"
             name="<%= input.name ?? '' %>"
-            placeholder="<%= input.placeholder ?? '' %>"
+            <%- (locals.values && locals.values[input.name]) ? `value="${locals.values[input.name]}"` : '' %>
         />
+      <% } else { %>
+        <div class="my-4">
+        <% if (input.label) { %>
+          <label class="block w-full py-1 text-gray-800 text-sm mb-1"><%= input.label %></label>
+        <% } %> 
+        <% if (['text', 'email', 'password', 'number', 'url', 'tel'].includes(input.type)) { %>
+          <input
+              class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border rounded outline-none w-full py-2 px-3 mb-1 text-gray-700 leading-tight focus:outline-none"
+              type="<%= input.type %>"
+              <%- (locals.values && locals.values[input.name]) ? `value="${locals.values[input.name]}"` : '' %>
+              name="<%= input.name ?? '' %>"
+              <%- (input.min !== undefined) ? `min="${input.min}"` : '' %>
+              <%- (input.max !== undefined) ? `max="${input.max}"` : '' %>
+              placeholder="<%= input.placeholder ?? '' %>"
+          />
+        <% } %>
+        <% if (input.type === 'textarea') { %>
+          <textarea 
+            class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border h-44 rounded outline-none w-full py-2 px-3 mb-1 text-gray-700 leading-tight focus:outline-none"
+            name="<%= input.name %>"><%= (locals.values && locals.values[input.name]) ?? '' -%></textarea>
+        <% } %> 
+        <% if (input.type === 'file') { %>
+          <input
+              class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border bg-white rounded outline-none w-full py-0 px-3 mb-1 text-gray-700 leading-tight focus:outline-none"
+              type="file"
+              name="<%= input.name ?? '' %>"
+              <%- input.accept ? `accept="${input.accept}"` : '' %>
+              placeholder="<%= input.placeholder ?? '' %>"
+          />
+        <% } %>
+        <% if (locals.errors && locals.errors[input.name]) { %>
+          <p class="text-red-500"><%= locals.errors[input.name] %></p>
+        <% } %>
+      </div>
       <% } %>
-      <% if (input.type === 'file') { %>
-        <input
-            class="<%= (locals.errors && locals.errors[input.name]) ? 'border-red-500' : 'focus:border-blue-400' %> border bg-white rounded outline-none w-full py-0 px-3 mb-1 text-gray-700 leading-tight focus:outline-none"
-            type="file"
-            name="<%= input.name ?? '' %>"
-            <%- input.accept ? `accept="${input.accept}"` : '' %>
-            placeholder="<%= input.placeholder ?? '' %>"
-        />
-      <% } %>
-      <% if (locals.errors && locals.errors[input.name]) { %>
-        <p class="text-red-500"><%= locals.errors[input.name] %></p>
-      <% } %>
-    </div>
     <% } %>
   <% } %>
-  <input class="block text-center bg-blue-600 px-5 py-2 rounded text-white my-8" type="submit" value="<%= locals.submitTitle ?? 'Отправить' %> " />
+  <input class="block text-center bg-blue-600 px-5 py-2 rounded text-white my-8" type="submit" value="<%= locals.submitTitle ?? 'Отправить' %>" />
   <% if (locals.message && !locals.errors) { %>
     <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
       <%= locals.message %>

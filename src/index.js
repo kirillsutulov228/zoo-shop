@@ -7,15 +7,17 @@ const loginValidator = require('./validators/loginValidator.js');
 const registerValidator = require('./validators/registerValidator.js');
 const adminRouter = require('./routers/adminRouter.js');
 const checkRole = require('./middlewares/checkRole.js');
-const { sequelize, User, Category } = require('./models');
+const { sequelize, User, Category, Product } = require('./models');
 const mapSessionToLocals = require('./middlewares/mapSessionToLocals.js');
 const UnauthorizedError = require('./errors/UnauthorizedError.js');
 const errorHandler = require('./middlewares/errorHandler.js');
 const updateUserValidator = require('./validators/updateUserValidator.js');
 const multer = require('multer');
 const createCategoryValidator = require('./validators/createCategoryValidator.js');
-
 const saveUUIDFile = require('./utils/saveUUIDFile.js');
+const NotFoundError = require('./errors/NotFoundError.js');
+const createProductValidator = require('./validators/createProductValidator.js');
+const filterObject = require('./utils/filterObject.js');
 
 const PORT = +process.env.PORT ?? 8000;
 const HOST = process.env.HOST ?? 'localhost';
@@ -142,6 +144,39 @@ app.post('/categories', checkRole(['admin']), upload.single('photo'), async (req
   }
 });
 
+app.get('/products', async (req, res, next) => {
+  let products = null;
+  let category = null;
+  if (req.query.categoryId) {
+    category = await Category.findByPk(req.query.categoryId);
+    if (!category) throw new NotFoundError();
+    products = await category.getProducts();
+  } else {
+    products = await Product.findAll();
+  }
+  return res.render('pages/products', { products, category, title: "Товары" });
+});
+
+app.post('/products', upload.single('photo'), async (req, res, next) => {
+  try {
+    const data = filterObject(req.body);
+    console.log(data);
+    await createProductValidator.validate(data, { abortEarly: false });
+    if (req.file) {
+      if (!req.file.mimetype.includes('image')) {
+        req.session.locals = { errors: { photo: 'Файл должен быть изображением' } };
+        return res.redirect(req.headers.referer);
+      }
+      data.photo = await saveUUIDFile('./public/models', req.file);
+    }
+    const product = await Product.create(data);
+    req.session.locals = { message: 'Товар успешно создан' };
+    return res.redirect(req.headers.referer);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('/logout', (req, res) => {
   req.session.destroy();
   return res.redirect('/');
@@ -150,8 +185,6 @@ app.get('/logout', (req, res) => {
 app.use((req, res) => {
   res.render('pages/notFound.ejs', { title: 'Страница не найдена' });
 });
-
-
 
 app.use(errorHandler);
 

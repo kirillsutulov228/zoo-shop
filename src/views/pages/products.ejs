@@ -1,0 +1,39 @@
+<div class="mb-8 mt-2 p-2 rounded">
+  <h1 class="text-center font-semibold text-xl mt-4 mb-8">Список товаров<%=locals.category ? ` в категории "${category.name}"`: ''%></h1>
+  <% if (!locals?.products?.length) { %>
+    <p class="text-lg text-center">Товары не найдены</p>
+  <% } else { %>
+    <div class="flex max-w-fit mx-auto justify-around flex-wrap">
+      <% for (const product of products) { %>
+        <div href="/product/<%= product.id %>" class="m-4 border block w-[300px] p-4 bg-white rounded">
+          <div class="overflow-hidden">
+            <img class="hover:scale-110 transition-all duration-700 w-full aspect-square object-cover block" src="/public/models/<%= product.photo %>" alt="" />
+          </div>
+          <p class="text-center text-xl my-2"><%= product.name %></p>
+          <p class="text-center text-lg my-2"><%= product.description %></p>
+          <p class="text-center text-sm mt-4 mb-2">В наличии: <%= product.count %> шт | Цена: <%= product.price %> р.</p>
+          <a class="block max-w-fit text-center text-white bg-green-500 px-5 py-2 rounded mt-4 mb-2 mx-auto" href="/products">В корзину</a>
+        </div>
+      <% } %> 
+    </div>
+  <% } %>  
+</div>
+
+<% if (locals?.user?.role === 'admin') { %> 
+
+  <%- include('../partials/form', {
+        title: 'Добавить товар',
+        action: '/products',
+        enctype: 'multipart/form-data',
+        values: { ...locals.values, categoryId: locals?.category?.id },
+        inputs: [
+          { type: 'text', 'name': 'name', 'label': 'Наименоване товара' },
+          { type: 'text', 'name': 'description', 'label': 'Краткое описание товара' },
+          { type: 'textarea', 'name': 'detailDescription', 'label': 'Детальное описание товара' },
+          { type: 'number', 'name': 'count', 'label': 'Количество товара', 'min': 0 },
+          { type: 'number', 'name': 'price', 'label': 'Цена за штуку (в рублях)', 'min': 0 },
+          { type: 'file', 'name': 'photo', 'label': 'Фото', accept: 'image/*' },
+          { type: 'hidden', 'name': 'categoryId' }
+        ]
+    }) %>   
+<% } %>

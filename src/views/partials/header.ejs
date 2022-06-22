@@ -7,6 +7,7 @@
     <a class="block lg:inline-block text-center bg-blue-600 px-5 py-2 rounded text-white my-4 mx-1" href="/">Главная</a>
     <a class="block lg:inline-block text-center   px-5 py-2 border text-blue-600 rounded my-4 mx-1" href="/categories">Каталог</a>
     <% if (locals.user) { %>
+      <a class="block lg:inline-block text-center text-white bg-green-500 px-5 py-2 rounded my-4 mx-1" href="/cart">Корзина</a>
       <% if (user.role === 'admin') { %>
         <a class="block lg:inline-block text-center text-white bg-green-500 px-5 py-2 rounded my-4 mx-1" href="/admin">Админ-панель</a>
       <% } %>

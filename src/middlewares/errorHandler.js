@@ -6,6 +6,7 @@ const yupErrorToObject = require('../utils/yupErrorToObject.js');
 const sequelizeErrorToObject = require('../utils/sequelizeErrorToObject.js');
 
 function errorHandler(err, req, res, next) {
+  console.error(err);
   req.session.locals = { values: { ...req.query, ...req.body } }
   if (err instanceof UnauthorizedError) {
     return res.render('/pages/unauthorized', { message: err.message });
@@ -21,7 +22,6 @@ function errorHandler(err, req, res, next) {
     req.session.locals.errors = sequelizeErrorToObject(err);
     return res.redirect(req.headers.referer);
   }
-  console.error(err);
   next();
 }
 
