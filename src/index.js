@@ -23,8 +23,8 @@ const PORT = +process.env.PORT ?? 8000;
 const HOST = process.env.HOST ?? 'localhost';
 
 const app = express();
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
@@ -101,7 +101,44 @@ app.post('/register', async (req, res, next) => {
   }
 });
 
-app.post('/change_user/:id', checkRole(['user', 'admin']), async (req, res, next) => {
+app.get('/cart', checkRole(), async (req, res, next) => {
+  let price = 0;
+  let total = 0;
+  if (req.session.cart) {
+    for (const id in req.session.cart) {
+      const { count, product } = req.session.cart[id];
+      price += count * product.price;
+      total++;
+    }
+  }
+  return res.render('pages/cart', { price, total, cart: req.session.cart });
+});
+
+app.post('/add_to_cart/:id', checkRole(), async (req, res, next) => {
+  try {
+    if (req.body.count === undefined || req.body.count < 1) {
+      req.session.locals.error = `Количество товара должно быть больше 0`;
+      return res.redirect(req.headers.referer);
+    }
+    const product = await Product.findByPk(req.params.id);
+    if (!product) throw NotFoundError();
+    if (!req.session.cart) {
+      req.session.cart = {};
+    }
+    req.session.cart[req.params.id] = { count: req.body.count, product };
+    req.session.locals.cartMessage = `Товар "${product.name}" добавлен в корзину в количестве ${req.body.count} шт.`;
+    res.redirect(req.headers.referer);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+app.post('/delete_from_cart/:id', checkRole(), (req, res) => {
+  req.session.cart[req.params.id] = undefined;
+  res.redirect(req.headers.referer);
+});
+
+app.post('/change_user/:id', checkRole(), async (req, res, next) => {
   try {
     if (req.params.id !== '' + req.session.user.id && req.session.user.role !== 'admin') {
       throw new UnauthorizedError();
@@ -118,7 +155,7 @@ app.post('/change_user/:id', checkRole(['user', 'admin']), async (req, res, next
     if (req.params.id === '' + req.session.user.id) {
       req.session.user = user;
     }
-    req.session.locals.message = "Данные успешно обновлены";
+    req.session.locals.message = 'Данные успешно обновлены';
     return res.redirect(req.headers.referer);
   } catch (error) {
     next(error);
@@ -154,7 +191,7 @@ app.get('/products', async (req, res, next) => {
   } else {
     products = await Product.findAll();
   }
-  return res.render('pages/products', { products, category, title: "Товары" });
+  return res.render('pages/products', { products, category, title: 'Товары' });
 });
 
 app.post('/products', upload.single('photo'), async (req, res, next) => {

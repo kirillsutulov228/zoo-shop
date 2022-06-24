@@ -3,16 +3,27 @@
   <% if (!locals?.products?.length) { %>
     <p class="text-lg text-center">Товары не найдены</p>
   <% } else { %>
+    <% if (locals.cartMessage) { %>
+      <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 text-center dark:text-green-800" role="alert">
+        <%= locals.cartMessage %>
+      </div>
+    <% } %> 
     <div class="flex max-w-fit mx-auto justify-around flex-wrap">
       <% for (const product of products) { %>
-        <div href="/product/<%= product.id %>" class="m-4 border block w-[300px] p-4 bg-white rounded">
+        <div class="mx-10 flex flex-col my-4 border w-[300px] p-4 bg-white rounded">
           <div class="overflow-hidden">
             <img class="hover:scale-110 transition-all duration-700 w-full aspect-square object-cover block" src="/public/models/<%= product.photo %>" alt="" />
           </div>
           <p class="text-center text-xl my-2"><%= product.name %></p>
           <p class="text-center text-lg my-2"><%= product.description %></p>
-          <p class="text-center text-sm mt-4 mb-2">В наличии: <%= product.count %> шт | Цена: <%= product.price %> р.</p>
-          <a class="block max-w-fit text-center text-white bg-green-500 px-5 py-2 rounded mt-4 mb-2 mx-auto" href="/products">В корзину</a>
+          <p class="text-center text-sm mt-2 mb-2">В наличии: <%= product.count %> шт | Цена: <%= product.price %> р.</p>
+          <form method="post" action="/add_to_cart/<%= product.id %>" class="mt-auto p-2 mb-0">
+            <div class="block">
+              <p class="w-fit whitespace-nowrap my-1">Кол-во товара:</p>
+              <input type="number" required min="1" max="<%= product.count %>" class="hadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="1" name="count" />
+            </div>
+            <input type="submit" value="В корзину" class="block cursor-pointer w-full text-center text-white bg-green-500 px-5 py-2 mt-4 mb-2 mx-auto" href="/products" />
+          </form>
         </div>
       <% } %> 
     </div>

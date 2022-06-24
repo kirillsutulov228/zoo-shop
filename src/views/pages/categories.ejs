@@ -5,7 +5,7 @@
   <% } else { %>
     <div class="flex max-w-fit mx-auto justify-around flex-wrap">
       <% for (const category of categories) { %>
-        <a href="/products?categoryId=<%= category.id %>" class="m-4 block w-[300px] border p-4 bg-white rounded">
+        <a href="/products?categoryId=<%= category.id %>" class="mx-10 my-4 block w-[300px] border p-4 bg-white rounded">
           <div class="overflow-hidden">
             <img class="hover:scale-110 transition-all duration-700 w-full aspect-square object-cover block" src="/public/models/<%= category.photo %>" alt="" />
           </div>

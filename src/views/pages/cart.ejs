@@ -1,0 +1,39 @@
+<div class="container mx-auto px-2">
+  <h1 class="text-center font-semibold text-xl mt-8 mb-8">Корзина</h1>
+  <div class="flex flex-wrap flex-col lg:flex-row">
+    <div class="flex-1 lg:mr-4 mb-8">
+    <% if (total === 0) { %>
+      <p class="text-center border rounded bg-white p-2">Корзина пуста...</p>
+    <% } %>  
+    <% for (const id in cart) { %>
+      <div class="flex min-w-[600px] p-2 mb-4 border rounded bg-white">
+        <img src="/public/models/<%= cart[id].product.photo %>" class="h-48 w-48 mx-2">
+        <div class="flex flex-col">
+          <p class="text-lg"><%= cart[id].product.name %></p>
+          <p><%= cart[id].product.description %></p>
+          <p>Количество: <%= cart[id].count %></p>
+          <p>Общая стоимость: <%= cart[id].count * cart[id].product.price %> ₽</p>
+          <form method="post" action="/delete_from_cart/<%= id %> " class="my-2">
+            <input type="submit" value="Удалить из корзины" class="block text-center bg-green-500 text-white cursor-pointer px-5 py-2 rounded m-0" />
+          </form>
+        </div>
+      </div>
+    <% } %>
+    </div>
+    <div class="w-full mb-8 lg:max-w-[250px] h-fit p-2 border rounded bg-white">
+      <p class="mb-2 mx-1 text-xl font-semibold">Заказ</p>
+      <% if (total) { %> 
+      <ul class="mx-2 mb-10 mt-2 list-disc">
+        <% for (const id in cart) { %>
+        <li class="ml-4">x<%= cart[id].count %> <%= cart[id].product.name %> </li>
+        <% } %>
+      </ul>
+      <p class="text-center p-1 rounded text-lg bg-green-500 text-white">Сумма заказа: <%= price %> ₽</p>
+      <a class="block my-2 p-1 rounded text-center text-lg bg-green-500 text-white" href="#">Перейти к оплате</a>
+      <% } else { %>
+        <p class="text-sm ml-1">Пожалуйста, добавьтье товар в корзину, чтобы совершить заказ</p>
+      <% } %>  
+    </div>
+  </div>
+</div>
+
