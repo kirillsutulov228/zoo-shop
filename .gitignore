@@ -1,5 +1,5 @@
 node_modules
 .env
-public/models
+public/models/*
+!public/models/**default**
 database.sqlite
-!public/models/default**
